@@ -2,44 +2,134 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LOG CCTV - LOGIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>LOG CCTV PPN Kejawanan</title>
+
   <link rel="icon" href="https://lh3.googleusercontent.com/sitesv/APaQ0STwL1HqWx5lmxame0Jp9XK8KM4Lyhd2TSstKDTsglvqIVAMQo3um8IgYa4QTxWkGxrVNVIXktbTVPdEhCbDow7ySEKNVrx9wWPiovmQp4EsYd7MyFEX10HG0rtGE1zoLj1lWwVOSz98h-O5re2raRRmslb1Ojuw4c1Khe4Cz7B-PJZDwFt9Ig9NBek=w16383" />
+
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #eee;
-      overflow: hidden; /* Mencegah scroll ganda */
+    :root{
+      --header-height: 52px;
+      --bg: #111;
+      --fg: #fff;
     }
 
-    .iframe-container {
-      width: 100%;
-      height: 100dvh; /* Menggunakan dvh agar pas di mobile browser */
+    html, body{
+      margin:0;
+      padding:0;
+      width:100%;
+      height:100%;
+      background:#eee;
+      overflow:hidden; /* cegah scroll ganda */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    /* HEADER (fixed, aman di semua device) */
+    .header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+
+      height: var(--header-height);
+      background: var(--bg);
+      color: var(--fg);
+
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding-left: 16px;
+      padding-right: 16px;
+
+      /* Safe area iPhone (notch) */
+      padding-top: env(safe-area-inset-top);
+      height: calc(var(--header-height) + env(safe-area-inset-top));
+
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    }
+
+    .title{
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: .2px;
+      margin-right: auto;
+      white-space: nowrap;
       overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 45vw;
     }
 
-    iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: none;
+    .menu a{
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 13px;
+      opacity: .9;
+      padding: 6px 8px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .menu a:hover{ opacity:1; text-decoration: underline; }
+
+    /* Kalau layar kecil, rapihin menu biar nggak mepet */
+    .menu{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .menu::-webkit-scrollbar{ display:none; }
+
+    /* IFRAME area: top/bottom fixed -> paling stabil lintas device */
+    .iframe-container{
+      position: fixed;
+      left: 0;
+      right: 0;
+
+      top: calc(var(--header-height) + env(safe-area-inset-top));
+      bottom: 0;
+
+      /* fallback tambahan kalau browser aneh soal viewport */
+      height: calc(100vh - (var(--header-height) + env(safe-area-inset-top)));
+      overflow: hidden;
+      background: #eee;
+    }
+
+    iframe{
+      display:block;
+      width:100%;
+      height:100%;
+      border:none;
     }
   </style>
 </head>
+
 <body>
+
+  <!-- HEADER MENU -->
+  <div class="header">
+    <div class="title">LOG CCTV</div>
+
+    <nav class="menu" aria-label="Menu Link">
+      <!-- GANTI LINK SESUAI KEBUTUHAN -->
+      <a href="https://jafungprakom.github.io/logcctv" target="_blank" rel="noopener noreferrer">Form</a>
+      <a href="https://jafungprakom.github.io/logcctv/login" target="_blank" rel="noopener noreferrer">Login</a>
+      <a href="https://ppnkejawanan.net" target="_blank" rel="noopener noreferrer">Kontak</a>
+    </nav>
+  </div>
+
+  <!-- APP -->
   <div class="iframe-container">
     <iframe
       id="app"
       src="https://script.google.com/macros/s/AKfycbykt8EcdlcwejrVVu0WO-v2TTW5xzA-Fib200MnRP2J6A6Sh1Ms_maOenyxNeiBWpzH_Q/exec?page=admin"
       scrolling="yes"
-      allowfullscreen="true"
-      webkitallowfullscreen="true"
-      mozallowfullscreen="true"
+      allowfullscreen
       allow="fullscreen; camera; microphone; display-capture; geolocation;">
     </iframe>
   </div>
+
 </body>
 </html>
